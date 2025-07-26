@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    function generatePID() {
+      const array = new Uint8Array(16);
+      crypto.getRandomValues(array);
+      return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    window.onload = function () {
+      let pid = localStorage.getItem('anon_pid');
+
+      if (!pid) {
+        pid = generatePID();
+        localStorage.setItem('anon_pid', pid);
+      }
+
+      const surveyURL = `https://stanforduniversity.qualtrics.com/jfe/form/SV_8DfzXyNVPItTrGm?pid=${pid}`;
+      window.location.replace(surveyURL);
+    };
+  </script>
+</head>
+<body>
+  <p>Loading your survey...</p>
+</body>
+</html>
